@@ -1,6 +1,6 @@
 # NAPGate
 
-On 16.07.2019 hundreds of databases of the Bulgarian tax agency [got leacked](https://www.reuters.com/article/us-bulgaria-cybersecurity/hackers-hit-bulgaria-leak-data-from-russian-email-government-idUSKCN1UB0MA) by a Russian hacker. This tool allows the extraction of some data from the .csv files. Purely for analytics purposes.
+On 15.07.2019 hundreds of databases of the Bulgarian tax agency [got leacked](https://www.reuters.com/article/us-bulgaria-cybersecurity/hackers-hit-bulgaria-leak-data-from-russian-email-government-idUSKCN1UB0MA) by a Russian hacker. This tool allows the extraction of some data from the .csv files. Purely for analytics purposes.
 
 ## Install
 ```
