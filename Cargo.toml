@@ -1,0 +1,11 @@
+[package]
+name = "napgate"
+version = "0.1.0"
+authors = ["Martin Sotirov <contact@martinsotirov.com>"]
+edition = "2018"
+
+[dependencies]
+csv = "1.1"
+glob = "0.3.0"
+clap = "~2.33"
+regex = "1"
