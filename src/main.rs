@@ -6,7 +6,7 @@ mod emails;
 
 fn main() -> Result<()> {
     let commands = App::new("napgate")
-        .version("1.0")
+        .version("0.1.0")
         .author("Martin Sotirov <contact@martinsotirov.com>")
         .about("Extracts data from CSV files")
         .subcommand(SubCommand::with_name("extract")
