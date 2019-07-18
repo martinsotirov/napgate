@@ -25,4 +25,4 @@ Alternatively the `-o` flag can be omitted to just get a number of unique entrie
 Running the tool on the current amount of leaked files results in:
 
 * 484654 email addresses
-* 5216168 EGN
+* 5410543 EGN

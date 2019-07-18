@@ -4,27 +4,33 @@ use std::io::Write;
 use std::path::Path;
 use std::collections::hash_set::HashSet;
 
-fn get_egn_index(reader: &mut csv::Reader<fs::File>) -> Option<usize> {
-    let mut index: Option<usize> = None;
+fn get_egn_index(reader: &mut csv::Reader<fs::File>) -> Vec<usize> {
+    let labels = ["EGN", "N_0_2_TPREPREGN", "N_0_2_TPREPREGN3", "N_0_2_GFOMAKER_EGN", "OLDEGN", "ERR_EGN",
+                  "DECEGN", "WEGN", "REPRESEGN", "BSTEGN", "TINID_EGN", "WITNESSEGN", "PROXYEGN", "ID_NO",
+                  "EIK", "EIK_EGN", "BULSTAT_EGN", "BS_EGN", "ZZEGN", "N_TERMREPR_EGN"];
+    let mut index: Vec<usize> = Vec::new();
     for (i, header) in reader.headers().unwrap().iter().enumerate() {
-        if header == "EGN" {
-            index = Some(i);
-            break;
+        if labels.contains(&header) {
+            index.push(i);
         }
     }
     index
 }
 
-fn extract_egn(egns: &mut HashSet<i64>, path: &Path) {
+fn extract_egn(egns: &mut HashSet<String>, path: &Path) {
     let mut reader = csv::Reader::from_path(path)
         .expect("Error reading csv file");
 
-    if let Some(index) = get_egn_index(&mut reader) {
+    let label_ids = get_egn_index(&mut reader);
+
+    if !label_ids.is_empty() {
         for item in reader.records() {
             if let Ok(result) = item {
-                if let Some(egn) = result.get(index) {
-                    if let Ok(egn_int) = egn.parse::<i64>() {
-                        egns.insert(egn_int);
+                for &label in &label_ids {
+                    if let Some(egn) = result.get(label) {
+                        if egn.len() == 10 {
+                            egns.insert(String::from(egn));
+                        }
                     }
                 }
             }
@@ -32,9 +38,8 @@ fn extract_egn(egns: &mut HashSet<i64>, path: &Path) {
     }
 }
 
-
 pub fn run(path: &str, output: Option<&str>) {
-    let mut egns: HashSet<i64> = HashSet::new();
+    let mut egns: HashSet<String> = HashSet::new();
     if let Some(csv_path) = Path::new(path).join("**/*.csv").to_str() {
         for file in glob(csv_path).expect("Error reading csv files") {
             match file {
